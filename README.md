@@ -88,6 +88,24 @@ The scheduler runs automatically on backend start. Set `AURUS_DISABLE_SCHEDULER=
 - **POST** `/api/reports/daily` — Generate daily brief
 - **POST** `/api/reports/weekly` — Generate weekly report
 
+## Deployment
+
+### Frontend (Vercel)
+
+1. **Connect GitHub** — Go to [vercel.com](https://vercel.com) → Add New Project → Import `David-Ibe/AurusAI`
+2. **Configure build**
+   - **Root Directory:** `frontend`
+   - **Framework Preset:** Vite (auto-detected)
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+3. **Environment variable**
+   - Add `VITE_API_URL` = your backend URL (e.g. `https://your-backend.onrender.com`) once the backend is deployed on Render
+4. Deploy — Vercel will build and deploy on every push to `master`
+
+### Backend (Render)
+
+Deploy the FastAPI backend to [Render](https://render.com). Set all env vars from `.env.example`.
+
 ## Project Structure
 
 ```
