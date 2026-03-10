@@ -106,6 +106,8 @@ The scheduler runs automatically on backend start. Set `AURUS_DISABLE_SCHEDULER=
 
 Deploy the FastAPI backend to [Render](https://render.com). Set all env vars from `.env.example`.
 
+**Python version:** The repo includes `.python-version` (3.12.7) so Render avoids Python 3.14 (pydantic has no wheels yet). If the build still uses 3.14, add env var `PYTHON_VERSION=3.12.7` in the Render dashboard.
+
 ## Project Structure
 
 ```
