@@ -1,0 +1,674 @@
+# AurusAI — Frontend Cursor Prompt
+
+Use this file for all frontend work on AurusAI.
+
+## What You Are Building
+
+AurusAI is a personal gold trading intelligence dashboard for an experienced XAU/USD intraday trader.
+
+This is NOT a marketing site. NOT a SaaS landing page. NOT a generic fintech UI.
+
+It is a live trading tool — opened every morning before the London session, kept visible during trades, checked on mobile for alerts. Every design decision must serve that use case.
+
+The aesthetic direction is: **Bloomberg Terminal meets premium dark trading platform**. Dense, data-rich, fast, zero decoration. Think professional-grade instrument, not consumer app.
+
+---
+
+## Typography
+
+**Primary font:** IBM Plex Mono — all data, numbers, prices, times, labels, badges, tickers  
+**Secondary font:** IBM Plex Sans — body text, descriptions, AI commentary, notes
+
+Import in index.html or main CSS:
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+```
+
+**Never use:** Inter, Roboto, Arial, system-ui, or any generic sans-serif for this project.
+
+Typography rules:
+
+- All prices: IBM Plex Mono, minimum 12px, always 2 decimal places
+- All labels: IBM Plex Mono, 9px, uppercase, letter-spacing: 2px
+- All AI-generated text: IBM Plex Sans, 11px, line-height 1.5
+- Section headers in panels: IBM Plex Mono, 9px, uppercase, letter-spacing: 2px, color: var(--text3)
+
+---
+
+## Color System
+
+Use CSS variables. Never hardcode hex values outside of :root.
+
+```css
+:root {
+  --bg:        #080808;   /* Page background */
+  --bg1:       #0F0F0F;   /* Panel background */
+  --bg2:       #141414;   /* Inner panel, cards */
+  --bg3:       #1A1A1A;   /* Hover states, inputs */
+  --border:    #242424;   /* Default borders */
+  --border2:   #2E2E2E;   /* Subtle borders */
+  --gold:      #C9A84C;   /* Primary accent — XAU/gold branding */
+  --gold2:     #E8C97A;   /* Price display, highlights */
+  --gold-dim:  #6B5520;   /* Muted gold, borders */
+  --text:      #E2D9C8;   /* Primary text */
+  --text2:     #8A8070;   /* Secondary text */
+  --text3:     #504840;   /* Muted labels */
+  --green:     #2ECC71;   /* Win, bullish, up, active */
+  --red:       #E74C3C;   /* Loss, bearish, down, HIGH impact */
+  --amber:     #F39C12;   /* Warning, MEDIUM impact, neutral bias */
+  --blue:      #3498DB;   /* Info, links */
+}
+```
+
+**Impact color rules** (apply consistently everywhere):
+
+- HIGH impact → var(--red)
+- MEDIUM impact → var(--amber)
+- LOW impact → var(--green)
+
+**Trade direction colors:**
+
+- LONG → var(--green)
+- SHORT → var(--red)
+
+**Trade outcome colors:**
+
+- Win → var(--green)
+- Loss → var(--red)
+- Breakeven → var(--amber)
+- Open → var(--blue)
+
+---
+
+## Layout Architecture
+
+### App Shell
+
+```
+┌──────────────────────────────────────────────────────┐
+│  Topbar (44px)  — price · session · next event · time │
+├────┬─────────────────────────────────────────────────┤
+│    │                                                  │
+│ S  │              Page Content                        │
+│ i  │              (scrollable)                        │
+│ d  │                                                  │
+│ e  │                                                  │
+│    │                                                  │
+├────┴─────────────────────────────────────────────────┤
+│  Status Bar (24px) — service health indicators        │
+└──────────────────────────────────────────────────────┘
+```
+
+### Sidebar
+
+- Width: 52px, fixed, never collapses on desktop
+- Background: var(--bg1), border-right: 1px solid var(--border)
+- Logo: "AURUS" in IBM Plex Mono, 11px, gold, vertical writing-mode, rotated 180deg
+- Nav icons: 36×36px, border-radius 6px, icon-only (no labels)
+- Active state: color var(--gold), background rgba(201,168,76,0.12), border 1px solid rgba(201,168,76,0.2)
+- Hover state: color var(--gold), background rgba(201,168,76,0.08)
+
+### Topbar (44px)
+
+Sections separated by vertical 1px borders. Left to right:
+
+1. XAU/USD price + 24h change badge
+2. Session indicator (London Open / New York / Asian / Closed)
+3. Next high-impact event + time in WAT
+4. Session bias (from morning brief)
+5. Live WAT clock (updates every second)
+
+**Session badge variants:**
+
+- London active: gold text, rgba(201,168,76,0.12) background
+- NY active: green text, rgba(46,204,113,0.1) background
+- Closed: var(--text3), var(--bg3) background
+
+### Status Bar (24px)
+
+Bottom strip showing backend service health:
+
+- Price Feed, News Monitor, Level Watcher, Scheduler
+- Green dot (animated pulse) = active, grey dot = inactive
+- Right side: "AurusAI v1.0 · Personal Build"
+
+---
+
+## Panel System
+
+All content lives inside panels. Panels have a consistent structure:
+
+```jsx
+<div className="panel">
+  <div className="panel-header">
+    <span className="panel-title">PANEL NAME</span>
+    <span className="panel-badge">metadata</span>
+  </div>
+  <div className="panel-body">
+    {/* content */}
+  </div>
+</div>
+```
+
+**Panel CSS:**
+
+```css
+.panel {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.panel-header {
+  height: 32px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.panel-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+```
+
+---
+
+## Pages & Components
+
+### Navigation Items
+
+| Icon | Page      | Route        |
+|------|-----------|--------------|
+| ⬡    | Dashboard | /dashboard   | (default)
+| ◈    | Calendar  | /calendar    |
+| ◉    | News      | /news        |
+| ⊞    | Levels    | /levels      |
+| ◎    | Journal   | /journal     |
+| ◆    | Insights  | /insights    |
+| ▣    | Report    | /report      |
+
+---
+
+### Page 1: Dashboard
+
+The main trading view. Opened every morning. Must answer three questions at a glance.
+
+**Three Questions Frame** (top of dashboard, always visible)
+
+Three horizontal rows, each with a question and an AI-generated answer badge:
+
+1. "Should I trade?" → TRADE (green) | WAIT (amber) | STAY OUT (red)
+2. "Should I wait?" → rendered as second context line
+
+The answers are driven by morning brief + current market state
+
+```css
+.question-frame {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.answer-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+```
+
+**Grid layout below questions:**
+
+- **Row 1:** 3 equal columns
+  - Morning Brief panel
+  - XAU/USD live price panel (with sparkline SVG)
+  - Key Levels panel
+- **Row 2:** 2/3 + 1/3 split
+  - News Intelligence panel
+  - Today's Events (economic calendar)
+- **Row 3:** 1/3 + 2/3 split
+  - Recent Alerts panel
+  - Recent Trades panel
+
+---
+
+### Morning Brief Panel
+
+Data fields displayed as key-value rows:
+
+```
+GOLD         $2,348.20
+24H CHANGE   +0.60% · +$14.10
+BIAS         Neutral → Bullish
+DXY          104.32 · Weak
+YIELDS       4.42% · Stable
+```
+
+Below data: a bias meter (horizontal bar with gradient from red to green, marker dot showing current bias position)
+
+Below meter: AI commentary block — left border 2px gold-dim, background var(--bg2), IBM Plex Sans 10px, color var(--text2)
+
+---
+
+### XAU/USD Live Price Panel
+
+- Large price display: 32px IBM Plex Mono, color var(--gold2)
+- Change row: up/down arrow, dollar change, percent change
+- Sparkline SVG below price (120px wide, 50px tall) — green line for up session, red for down
+- 2×2 grid below sparkline: Session H, Session L, Bid, Ask — each in a var(--bg2) card
+
+---
+
+### Key Levels Panel
+
+Scrollable list of support/resistance levels:
+
+```
+[R] 2,374.50  Daily Resistance    +$26.30  [====      ]
+[R] 2,361.00  Weekly High         +$12.80  [=====     ]
+[R] 2,352.40  Pre-CPI Level       +$4.20 ⚠ [==        ]
+[S] 2,338.50  1H Support          -$9.70   [===       ]
+[S] 2,328.00  Daily Support       -$20.20  [======    ]
+```
+
+- R type: color var(--red)
+- S type: color var(--green)
+- Distance bar: thin 2px track, fills red for resistance, green for support
+- Close proximity (within $5): distance shown in var(--amber) with warning indicator
+
+---
+
+### News Intelligence Panel
+
+Each news item:
+
+```
+● [impact dot]  Headline text here in IBM Plex Sans
+  Reuters · 08:14 WAT
+  AI assessment: Gold tends to trade cautiously... (italic, var(--text2))
+```
+
+- Impact dot sizes: 6px circle
+- HIGH: var(--red) + box-shadow glow
+- MEDIUM: var(--amber)
+- LOW: var(--green)
+- Hover: subtle gold tint background
+
+---
+
+### Today's Events Panel (Calendar)
+
+Compact row layout:
+
+```
+13:30  [HIGH]  US CPI                   Gold reactive if surprise
+15:00  [MED]   Fed Member Waller        Rate path commentary
+```
+
+If HIGH impact event today: show warning block at bottom in red-tinted background with advice to reduce position size.
+
+---
+
+### Recent Alerts Panel
+
+```
+[LVL]  XAU/USD approaching Pre-CPI Level at $2,352.40...
+       08:41 WAT · WhatsApp + Telegram
+
+[NEWS] High-impact: Powell comments triggered $8 move...
+       08:14 WAT · WhatsApp + Telegram
+```
+
+Alert type badges: IBM Plex Mono 9px, gold color, gold-tinted background.
+
+---
+
+### Recent Trades Panel
+
+Table layout with columns: Date | Dir | Entry | Exit | RR | Result
+
+- LONG in var(--green), SHORT in var(--red)
+- Win in var(--green), Loss in var(--red)
+- RR ratio colored by outcome
+- Header row: IBM Plex Mono 9px uppercase var(--text3)
+
+---
+
+### Page 2: Calendar (/calendar)
+
+Full economic calendar for the week.
+
+Layout: filter tabs at top (Today / This Week / All), then event list.
+
+Each event row:
+
+- Date + time in WAT
+- Impact pill (HIGH/MED/LOW)
+- Event name
+- Forecast vs Previous values
+- Expand on click → shows AI commentary block:
+  - What this event measures
+  - Historical gold reaction pattern
+  - What to watch for in the release
+
+Filter to show only gold-relevant events by default.
+
+---
+
+### Page 3: News (/news)
+
+Full news feed with search and filter.
+
+- Top: search bar + impact filter (All / HIGH / MED / LOW)
+- Each item expands to show:
+  - Full AI impact assessment
+  - Impact score (1-10) as a progress bar
+  - Direction indicator (Bullish / Bearish / Neutral for gold)
+  - Confidence level
+  - Timeframe (Immediate / Hours / Days)
+
+---
+
+### Page 4: Levels (/levels)
+
+Level manager — add, edit, delete key price levels.
+
+- **Left side:** form to add new level
+  - Price input
+  - Type selector (Support / Resistance)
+  - Label input
+  - Alert threshold (in dollars)
+  - Active toggle
+- **Right side:** live list of all levels with proximity to current price, sorted by proximity.
+- Visual price ladder: vertical axis showing current price with levels marked as horizontal lines — resistance above in red, support below in green.
+
+---
+
+### Page 5: Journal (/journal)
+
+Two sections: Log Trade form + Trade History table.
+
+**Log Trade form fields:**
+
+- Entry Price (number)
+- Exit Price (number, optional for open trades)
+- Direction (Long / Short toggle)
+- Lot Size
+- Session (London / New York / Asian / Overlap)
+- Setup Description (textarea)
+- News Day toggle
+- Outcome (Win / Loss / Breakeven / Open)
+- Notes (textarea)
+
+**Trade History table:**
+
+Same columns as dashboard recent trades but with full pagination, sort by any column, and filter by outcome/session/direction.
+
+Row click → expands to show full notes + setup description.
+
+---
+
+### Page 6: Insights (/insights)
+
+AI-analyzed performance data.
+
+**Three stat cards at top:**
+
+```
+[green border]          [red border]           [gold border]
+BEST SETUP              WEAK AREA              NEWS DAYS
+71%                     33%                    -2.3R
+London pullback...      NY open breakout...    Net negative on...
+```
+
+Below cards: two panels side by side
+
+- **Win Rate by Session:** horizontal bar chart (custom, no chart library needed — CSS bars)
+- **AI Recommendations:** list of ↑ good / ↓ bad insights
+
+**Bottom:** full stats table
+
+Total trades, Win rate, Avg RR, Best session, Worst session, Avg win, Avg loss, Profit factor
+
+Regenerate button: triggers new Claude analysis. Shows "Analyzing..." loading state.
+
+---
+
+### Page 7: Weekly Report (/report)
+
+Shows the latest Sunday intelligence report.
+
+- Header: week date range + delivery status (Sent via WhatsApp + Telegram)
+- Report sections rendered as expandable blocks:
+  - Week Summary
+  - Major Drivers
+  - Technical Picture
+  - Important News
+  - Upcoming Catalysts
+  - Key Levels to Watch
+  - Trade Setup Ideas
+- Each section: IBM Plex Sans body text, rendered from stored JSON content.
+- Previous reports: dropdown or list to access past weeks.
+
+---
+
+## Animations & Interactions
+
+Keep animations minimal and purposeful:
+
+```css
+/* Price flash on update */
+@keyframes priceFlash {
+  0% { color: var(--gold2); }
+  50% { color: var(--green); background: rgba(46,204,113,0.1); }
+  100% { color: var(--gold2); }
+}
+
+/* Status dot pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Panel entry */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+```
+
+**Rules:**
+
+- Flash gold price briefly when it updates from WebSocket
+- Pulse green dot on active status indicators
+- Subtle fadeIn on panel mount (animation-delay stagger: 50ms per panel)
+- NO page transition animations — instant page switches only
+- NO loading spinners except on AI-generating states (use a pulsing dot)
+
+---
+
+## Responsive Behavior
+
+- **Desktop (>1200px):** Full layout as specified above
+- **Tablet (900–1200px):** Collapse 3-column grids to 2-column
+- **Mobile (<900px):**
+  - Sidebar collapses to bottom tab bar (5 icons max)
+  - Single column layout
+  - Top bar shows price + time only
+  - All panels stack vertically
+  - Prioritize: Questions frame → Price → Levels → News → Calendar
+
+Mobile is primarily used for reading alerts. Keep it readable and fast.
+
+---
+
+## Data Fetching Pattern
+
+Use React Query (TanStack Query) for all API calls:
+
+```javascript
+// api/client.js
+import axios from 'axios';
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL });
+export default api;
+
+// hooks/useGoldPrice.js
+import { useQuery } from '@tanstack/react-query';
+export const useGoldPrice = () => useQuery({
+  queryKey: ['goldPrice'],
+  queryFn: () => api.get('/price/current').then(r => r.data),
+  refetchInterval: 10000, // 10 seconds
+  staleTime: 5000,
+});
+```
+
+- **Loading states:** show skeleton loaders — thin var(--border2) blocks pulsing opacity, same dimensions as the content they replace.
+- **Error states:** show subtle red-border panel with "Feed unavailable" in IBM Plex Mono, never crash the page.
+
+---
+
+## Component File Structure
+
+```
+frontend/src/
+├── pages/
+│   ├── Dashboard.jsx
+│   ├── Calendar.jsx
+│   ├── News.jsx
+│   ├── Levels.jsx
+│   ├── Journal.jsx
+│   ├── Insights.jsx
+│   └── Report.jsx
+├── components/
+│   ├── layout/
+│   │   ├── AppShell.jsx       # Sidebar + topbar + statusbar wrapper
+│   │   ├── Sidebar.jsx
+│   │   ├── Topbar.jsx
+│   │   └── StatusBar.jsx
+│   ├── panels/
+│   │   ├── Panel.jsx          # Reusable panel wrapper
+│   │   ├── MorningBrief.jsx
+│   │   ├── PricePanel.jsx
+│   │   ├── KeyLevels.jsx
+│   │   ├── NewsPanel.jsx
+│   │   ├── CalendarPanel.jsx
+│   │   ├── AlertsPanel.jsx
+│   │   └── TradesPanel.jsx
+│   ├── ui/
+│   │   ├── ImpactBadge.jsx    # HIGH/MED/LOW pill
+│   │   ├── ImpactDot.jsx      # Colored dot with optional glow
+│   │   ├── PriceChange.jsx    # +/- price with color
+│   │   ├── SessionBadge.jsx   # London Open etc.
+│   │   ├── Sparkline.jsx      # SVG mini chart
+│   │   ├── BiasBar.jsx        # Sentiment meter
+│   │   ├── LevelBar.jsx       # Proximity bar for key levels
+│   │   └── SkeletonBlock.jsx  # Loading placeholder
+│   └── forms/
+│       ├── TradeForm.jsx
+│       └── LevelForm.jsx
+├── hooks/
+│   ├── useGoldPrice.js
+│   ├── useCalendar.js
+│   ├── useNews.js
+│   ├── useLevels.js
+│   ├── useJournal.js
+│   ├── useInsights.js
+│   └── useReport.js
+├── lib/
+│   ├── api.js                 # Axios instance
+│   ├── supabase.js            # Supabase client
+│   └── formatters.js          # formatPrice, formatTime, formatRR
+├── styles/
+│   └── globals.css            # CSS variables + resets + base styles
+├── App.jsx                    # Router
+└── main.jsx
+```
+
+---
+
+## Formatting Utilities
+
+Always use these formatters — never inline formatting logic:
+
+```javascript
+// lib/formatters.js
+
+export const formatPrice = (price) =>
+  new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
+// → "2,348.20"
+
+export const formatChange = (change, pct) => {
+  const sign = change >= 0 ? '+' : '';
+  return `${sign}${formatPrice(change)} (${sign}${pct.toFixed(2)}%)`;
+};
+// → "+14.10 (+0.60%)"
+
+export const formatWAT = (date) =>
+  new Date(date).toLocaleTimeString('en-US', { timeZone: 'Africa/Lagos', hour12: false });
+// → "08:41:22"
+
+export const formatRR = (rr) => `1:${Math.abs(rr).toFixed(1)}`;
+// → "1:2.1"
+```
+
+---
+
+## What Never to Do
+
+- Never use Inter, Roboto, or system fonts
+- Never use purple, violet, or gradient backgrounds
+- Never use rounded corners larger than 6px on panels
+- Never use box-shadow for decoration (only for glows on active elements)
+- Never use heavy page transition animations
+- Never show loading spinners (use skeleton loaders or pulsing dots)
+- Never show raw API error objects to the user
+- Never let a failed AI call crash a panel — always show fallback content
+- Never use a chart library (Recharts, Chart.js etc.) for the sparklines or bar charts — build them with SVG or CSS
+- Never use Tailwind utility classes for typography — define all type styles in globals.css using the IBM Plex fonts
+- Never make the sidebar wider than 52px on desktop
+- Never add padding larger than 16px inside panels
+
+---
+
+## Install Command
+
+```bash
+cd frontend
+npm create vite@latest . -- --template react
+npm install axios @tanstack/react-query @supabase/supabase-js react-router-dom
+npx tailwindcss init -p
+```
+
+Add to index.html:
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+```
+
+---
+
+## First Build Instruction for Cursor
+
+When starting, say:
+
+**"Build the AppShell first — Sidebar, Topbar, and StatusBar with all CSS variables and fonts configured. Use placeholder content for the topbar data. Then build the Dashboard page with all panels using static mock data. Connect to real API endpoints only after the UI is complete and approved."**
+
+Build UI with static data first. Wire to backend second. This prevents getting blocked on API issues while building the interface.
+
+---
+
+*AurusAI frontend: a precision instrument for a precision trader.*

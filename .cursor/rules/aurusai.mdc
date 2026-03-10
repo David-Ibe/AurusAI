@@ -1,0 +1,463 @@
+---
+description: AurusAI — Personal gold trading intelligence platform. Tech stack, structure, features, and build order.
+alwaysApply: true
+---
+
+# AurusAI — Personal Gold Trading Intelligence Platform
+
+## Core Mission
+
+You are building **AurusAI**, a personal gold trading intelligence system designed for a solo trader with 4 years of experience trading XAU/USD.
+
+The platform is not a generic fintech dashboard.
+
+Its purpose is to act as a trading intelligence assistant that helps answer three questions quickly during live trading:
+
+- **Should I trade?**
+- **Should I wait?**
+- **Should I stay out?**
+
+The system should prioritize:
+
+- clarity
+- speed
+- useful intelligence
+- minimal noise
+
+AurusAI should behave like a trading partner that provides:
+
+- macro context
+- real-time alerts
+- pattern discovery from past trades
+
+The trader remains the final decision maker.
+
+The platform is initially for personal use only, so engineering choices should prioritize:
+
+- fast development
+- reliability
+- low operational complexity
+
+---
+
+## Tech Stack — Do Not Deviate
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + Vite + TailwindCSS |
+| Backend | FastAPI (Python 3.11+) |
+| Database | Supabase (PostgreSQL) |
+| Scheduler | APScheduler |
+| AI | Anthropic Claude API (`claude-sonnet-4-20250514`) |
+| Gold Price | TwelveData API |
+| Economic Data | Financial Modeling Prep (FMP) |
+| News | NewsAPI |
+| Messaging | Twilio WhatsApp + Telegram Bot |
+| Deployment | Frontend → Vercel · Backend → Render |
+
+Only suggest alternative libraries if the specified tool is unavailable or broken.
+
+---
+
+## AurusAI Intelligence Layers
+
+The platform consists of three intelligence layers.
+
+### 1. Pre-Market Intelligence
+
+Generated automatically every day before the London session.
+
+**Execution Time:** 06:30 WAT (Africa/Lagos timezone)
+
+**Purpose:** Give the trader macro awareness before trading begins.
+
+**Data Inputs:**
+
+- current XAU/USD price
+- 24h price change
+- weekly trend
+- economic calendar events
+- relevant macro news
+- DXY and yield references (from news context)
+
+**Output Example:**
+
+```
+AurusAI Morning Brief
+
+Gold: $2348
+24h change: +0.6%
+
+Macro Context
+Dollar slightly weaker overnight.
+US yields stable.
+
+Bias
+Neutral → Slight Bullish
+
+Key Levels
+Resistance: 2360
+Support: 2332
+
+Events Today
+US CPI – High Impact (13:30 WAT)
+
+Note
+Gold tends to trade cautiously ahead of CPI releases.
+```
+
+Store the report in the reports table.
+
+### 2. Real-Time Trading Intelligence
+
+AurusAI must monitor the market and surface only actionable alerts.
+
+**Alert Types:**
+
+- Key level alerts
+- High-impact news
+- Economic releases
+
+The system should avoid alert spam.
+
+Alerts should always include context, not just raw information.
+
+### 3. Post-Trade Intelligence
+
+AurusAI analyzes the trader's history to discover performance patterns.
+
+The goal is to answer:
+
+- When does the trader perform best?
+- Which setups are profitable?
+- Which behaviors cause losses?
+
+**Example insight:**
+
+```
+Best performance:
+London session pullback trades
+Win rate: 71%
+
+Weak performance:
+New York breakout trades
+Win rate: 33%
+
+Observation:
+Losses increase significantly on high-impact news days.
+```
+
+Insights should be cached and regenerated only when new trades are added.
+
+---
+
+## Backend Architecture
+
+```
+aurusai/
+├── frontend/
+│
+├── backend/
+│   ├── app/
+│   │   ├── routers/
+│   │   ├── services/
+│   │   ├── jobs/
+│   │   ├── models/
+│   │   ├── prompts/
+│   │   ├── db/
+│   │   ├── utils/
+│   │   └── main.py
+```
+
+**Architecture Flow:** Router → Service → External APIs → Database → Response
+
+---
+
+## Database Schema
+
+```sql
+-- trades
+CREATE TABLE trades (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  entry_price DECIMAL NOT NULL,
+  exit_price DECIMAL,
+  direction TEXT CHECK (direction IN ('long','short')) NOT NULL,
+  lot_size DECIMAL,
+  rr_ratio DECIMAL,
+  setup_description TEXT,
+  session TEXT CHECK (session IN ('london','new_york','asian','overlap')),
+  news_day BOOLEAN DEFAULT false,
+  outcome TEXT CHECK (outcome IN ('win','loss','breakeven','open')),
+  pnl_dollars DECIMAL,
+  entry_time TIMESTAMPTZ,
+  exit_time TIMESTAMPTZ,
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- levels
+CREATE TABLE levels (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  price DECIMAL NOT NULL,
+  type TEXT CHECK (type IN ('support','resistance')),
+  label TEXT,
+  active BOOLEAN DEFAULT true,
+  alert_threshold DECIMAL DEFAULT 2,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- alerts
+CREATE TABLE alerts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  type TEXT CHECK (type IN ('level','news','calendar','report')),
+  message TEXT,
+  channel TEXT CHECK (channel IN ('whatsapp','telegram','both')),
+  fired_at TIMESTAMPTZ DEFAULT now(),
+  metadata JSONB
+);
+
+-- reports (stores both daily briefs and weekly reports)
+CREATE TABLE reports (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  week_start DATE,
+  content JSONB,
+  delivered_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- news_cache
+CREATE TABLE news_cache (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  headline TEXT,
+  source TEXT,
+  url TEXT,
+  published_at TIMESTAMPTZ,
+  impact_score INTEGER,
+  impact_assessment TEXT,
+  processed BOOLEAN DEFAULT false,
+  alert_sent BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- calendar_cache
+CREATE TABLE calendar_cache (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  event_name TEXT,
+  event_time TIMESTAMPTZ,
+  impact_rating TEXT,
+  explanation TEXT,
+  historical_pattern TEXT,
+  watch_for TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+```
+
+---
+
+## AI Integration
+
+All AI interactions are centralized in `services/claude_ai.py`.
+
+**Model:** `claude-sonnet-4-20250514`
+
+**Standard Call Format:**
+
+```python
+client.messages.create(
+    model="claude-sonnet-4-20250514",
+    max_tokens=1000,
+    temperature=0.2,
+    top_p=0.9
+)
+```
+
+Low temperature ensures consistent analytical responses.
+
+**Claude Prompt Rules — Whenever JSON is required:**
+
+- Respond ONLY with valid JSON.
+- No markdown.
+- No explanation.
+- No backticks.
+
+**If JSON parsing fails:**
+
+1. Retry once
+2. Use fallback response
+
+---
+
+## News Intelligence System
+
+Poll NewsAPI every 5 minutes.
+
+**Search keywords:**
+
+- gold
+- XAU
+- Federal Reserve
+- inflation
+- interest rates
+- US dollar
+- DXY
+- Treasury yields
+- geopolitical
+- safe haven
+
+**Process pipeline:**
+
+```
+Fetch news
+    ↓
+Deduplicate
+    ↓
+Relevance filter
+    ↓
+Claude impact analysis
+    ↓
+Store in news_cache
+    ↓
+Alert if score ≥ 7
+```
+
+---
+
+## Key Level Alert System
+
+Every 60 seconds:
+
+1. Fetch current gold price
+2. Check all active levels
+3. If distance ≤ alert threshold → Trigger alert
+
+**Example alert:**
+
+```
+AurusAI Level Alert
+
+XAU/USD approaching Daily Resistance
+
+Level: $2340
+Current: $2338
+
+Context:
+Gold is up 1.2% today.
+Breakout attempts possible during NY session.
+```
+
+---
+
+## Weekly Intelligence Report
+
+Runs every Sunday at 19:00 WAT.
+
+**Report sections:**
+
+- Week Summary
+- Major Drivers
+- Technical Picture
+- Important News
+- Upcoming Catalysts
+- Key Levels
+- Trade Setup Ideas
+
+Short version sent via WhatsApp + Telegram.
+
+Full version stored in dashboard.
+
+---
+
+## Scheduler Setup
+
+| Job | Schedule |
+|-----|----------|
+| price watcher | every 60 seconds |
+| news monitor | every 5 minutes |
+| weekly report | Sunday 19:00 WAT |
+| daily briefing | 06:30 WAT |
+
+**Timezone:** Africa/Lagos
+
+---
+
+## Frontend Design Philosophy
+
+The interface is a trading tool, not a marketing site.
+
+**Priorities:**
+
+- clarity
+- speed
+- low distraction
+
+**Theme:**
+
+| Element | Value |
+|---------|-------|
+| Background | #0D0D0D |
+| Gold accent | #B8860B |
+| Impact HIGH | Red |
+| Impact MEDIUM | Amber |
+| Impact LOW | Green |
+
+**Rules:**
+
+- no heavy animations
+- fast loading
+- readable on mobile
+- price displayed to 2 decimal places
+
+---
+
+## Logging and Reliability
+
+Backend must log:
+
+- AI calls
+- alerts fired
+- scheduled jobs
+- API failures
+
+All external calls must be wrapped in try/except.
+
+Claude failures must not break the system.
+
+Fallback responses should be used.
+
+---
+
+## Development Order
+
+Follow strictly.
+
+**Phase 1** — Economic calendar intelligence
+
+**Phase 2** — News impact analyzer
+
+**Phase 3** — Key level alerts
+
+**Phase 4** — Trade journal
+
+**Phase 5** — Weekly intelligence reports
+
+**Phase 6** — Daily morning brief (06:30 WAT)
+
+---
+
+## Philosophy
+
+AurusAI should behave like a macro analyst + trading assistant.
+
+**It should surface:**
+
+- important context
+- high-probability signals
+- behavioral insights
+
+**It should avoid:**
+
+- unnecessary alerts
+- excessive AI calls
+- information overload
+
+The system exists to improve trading discipline and situational awareness.

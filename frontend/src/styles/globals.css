@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --bg:        #080808;
+  --bg1:       #0F0F0F;
+  --bg2:       #141414;
+  --bg3:       #1A1A1A;
+  --border:    #242424;
+  --border2:   #2E2E2E;
+  --gold:      #D4943A;
+  --gold2:     #F0B050;
+  --gold-dim:  #6B5520;
+  --text:      #F0E8D8;
+  --text2:     #CAB8A8;
+  --text3:     #9A8A7A;
+  --green:     #2ECC71;
+  --red:       #E74C3C;
+  --amber:     #F39C12;
+  --blue:      #3498DB;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography — do not use Tailwind for these */
+.font-mono { font-family: 'IBM Plex Mono', monospace; }
+.font-sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+.text-price { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.text-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
+.text-ai { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 11px; line-height: 1.5; }
+.text-panel-header { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); }
+
+/* Panel system */
+.panel {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.panel-header {
+  height: 32px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.panel-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.panel-body {
+  padding: 12px;
+}
+
+/* Question frame (Three Questions) */
+.question-frame {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.answer-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.answer-badge--trade { background: rgba(46, 204, 113, 0.2); color: var(--green); border: 1px solid rgba(46, 204, 113, 0.3); }
+.answer-badge--wait { background: rgba(243, 156, 18, 0.2); color: var(--amber); border: 1px solid rgba(243, 156, 18, 0.3); }
+.answer-badge--stay-out { background: rgba(231, 76, 60, 0.2); color: var(--red); border: 1px solid rgba(231, 76, 60, 0.3); }
+
+/* Animations */
+@keyframes priceFlash {
+  0% { color: var(--gold2); }
+  50% { color: var(--green); background: rgba(46, 204, 113, 0.1); }
+  100% { color: var(--gold2); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.price-flash { animation: priceFlash 0.4s ease-out; }
+.pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
+.fade-in { animation: fadeIn 0.2s ease-out; }
+
+/* Impact dot glow for HIGH */
+.impact-dot-high {
+  box-shadow: 0 0 6px var(--red);
+}
