@@ -9,19 +9,19 @@ import ThreeQuestions from '../components/panels/ThreeQuestions';
 
 export default function Dashboard() {
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 md:space-y-5">
       {/* Three Questions Frame */}
       <ThreeQuestions />
 
       {/* Row 1: 3 equal columns */}
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3 md:gap-5">
         <MorningBrief />
         <PricePanel />
         <KeyLevels />
       </div>
 
       {/* Row 2: 2/3 + 1/3 */}
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3 md:gap-5">
         <div className="md:col-span-2">
           <NewsPanel />
         </div>
@@ -29,7 +29,7 @@ export default function Dashboard() {
       </div>
 
       {/* Row 3: 1/3 + 2/3 */}
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3 md:gap-5">
         <AlertsPanel />
         <div className="md:col-span-2">
           <TradesPanel />

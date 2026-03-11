@@ -9,7 +9,7 @@ const services = [
 export default function StatusBar() {
   return (
     <footer
-      className="flex items-center justify-between border-t border-[var(--border)] bg-[var(--bg1)] px-4"
+      className="hidden items-center justify-between border-t border-[var(--border)] bg-[var(--bg1)] px-4 md:flex"
       style={{ height: 24 }}
     >
       <div className="flex items-center gap-4">

@@ -31,21 +31,22 @@ body {
   min-height: 100vh;
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography — high contrast, 14–16px base, medium/semi-bold */
-.font-mono { font-family: 'IBM Plex Mono', monospace; }
-.font-sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
-.text-price { font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 600; letter-spacing: 0.03em; }
-.text-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
-.text-ai { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; font-weight: 500; line-height: 1.6; letter-spacing: 0.02em; }
-.text-panel-header { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+/* Typography — Inter (screen-optimized) + JetBrains Mono for numbers */
+.font-mono { font-family: 'JetBrains Mono', 'Consolas', monospace; }
+.font-sans { font-family: 'Inter', system-ui, sans-serif; }
+.text-price { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 16px; font-weight: 600; letter-spacing: 0.02em; }
+.text-label { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+.text-ai { font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: 500; line-height: 1.6; letter-spacing: 0.01em; }
+.text-panel-header { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
 
 /* Panel system — layered surfaces with subtle elevation */
 .panel {
@@ -65,7 +66,7 @@ body {
   background: var(--bg2);
 }
 .panel-title {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
   font-size: 12px;
   font-weight: 600;
   color: var(--text3);
@@ -89,7 +90,7 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 .answer-badge {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
   font-size: 14px;
   font-weight: 600;
   padding: 8px 16px;
@@ -122,4 +123,46 @@ body {
 /* Impact dot glow for HIGH */
 .impact-dot-high {
   box-shadow: 0 0 6px var(--red);
+}
+
+/* Smooth overflow scroll on iOS */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile: readable, touch-friendly, safe areas */
+@media (max-width: 767px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-size: 15px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .panel-body {
+    padding: 12px;
+  }
+  .panel-header {
+    height: 40px;
+    padding: 0 12px;
+  }
+  .panel-title {
+    font-size: 11px;
+  }
+  .question-frame {
+    padding: 12px 14px;
+    min-height: 52px;
+  }
+  .answer-badge {
+    font-size: 13px;
+    padding: 8px 12px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Prevent iOS zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }

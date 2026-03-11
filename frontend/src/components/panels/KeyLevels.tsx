@@ -57,7 +57,7 @@ export default function KeyLevels() {
     <Panel title="KEY LEVELS">
       <div className="max-h-48 space-y-3 overflow-y-auto">
         {enriched.map((level) => (
-          <div key={level.id} className="flex items-center gap-3 text-base">
+          <div key={level.id} className="flex items-center gap-2 text-sm md:gap-3 md:text-base">
             <span
               className="w-4 font-mono font-semibold"
               style={{
@@ -66,14 +66,14 @@ export default function KeyLevels() {
             >
               [{level.type === 'resistance' ? 'R' : 'S'}]
             </span>
-            <span className="w-24 font-mono text-base font-semibold text-[var(--text)]">
+            <span className="w-20 shrink-0 font-mono font-semibold text-[var(--text)] md:w-24 md:text-base">
               {formatPrice(Number(level.price))}
             </span>
-            <span className="flex-1 font-sans text-[var(--text2)]">
+            <span className="min-w-0 flex-1 truncate font-sans text-[var(--text2)]">
               {level.label || '—'}
             </span>
             <span
-              className={`w-20 font-mono font-semibold ${level.isClose ? 'text-[var(--amber)]' : 'text-[var(--text2)]'}`}
+              className={`w-16 shrink-0 font-mono text-xs font-semibold md:w-20 md:text-base ${level.isClose ? 'text-[var(--amber)]' : 'text-[var(--text2)]'}`}
             >
               {level.distance >= 0 ? '+' : ''}${formatPrice(level.distance)}
               {level.isClose && ' ⚠'}

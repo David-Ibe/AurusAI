@@ -30,10 +30,10 @@ export default function Topbar() {
 
   return (
     <header
-      className="flex h-11 items-center justify-between border-b border-[var(--border)] bg-[var(--bg1)] px-4"
+      className="flex h-11 min-h-[44px] shrink-0 items-center justify-between gap-2 overflow-x-auto border-b border-[var(--border)] bg-[var(--bg1)] px-3 md:px-4 md:overflow-visible"
       style={{ height: 44 }}
     >
-      <div className="flex items-center gap-3 border-r border-[var(--border)] pr-4">
+      <div className="flex shrink-0 items-center gap-2 border-r border-[var(--border)] pr-3 md:gap-3 md:pr-4">
         <span
           className="font-mono leading-none"
           style={{ fontSize: 18, color: 'var(--gold)', textShadow: '0 0 12px rgba(251,191,36,0.35)' }}
@@ -41,14 +41,14 @@ export default function Topbar() {
           ⬡
         </span>
         <span
-          className="font-mono font-bold"
-          style={{ fontSize: 14, color: 'var(--gold2)', letterSpacing: 2, fontWeight: 600 }}
+          className="font-mono font-bold text-sm md:text-base"
+          style={{ color: 'var(--gold2)', letterSpacing: 2, fontWeight: 600 }}
         >
           AURUSAI
         </span>
       </div>
 
-      <div className="flex items-center gap-2 border-r border-[var(--border)] px-4">
+      <div className="flex shrink-0 items-center gap-2 border-r border-[var(--border)] px-3 md:px-4">
         <span
           className="flex items-center gap-1.5 rounded px-2 py-1 font-mono text-xs font-medium uppercase"
           style={{
@@ -62,7 +62,7 @@ export default function Topbar() {
         </span>
       </div>
 
-      <div className="flex items-center gap-2 border-r border-[var(--border)] px-4">
+      <div className="hidden shrink-0 items-center gap-2 border-r border-[var(--border)] px-4 sm:flex">
         <span className="font-mono text-xs font-medium text-[var(--text3)]">NEXT</span>
         <span className="font-mono text-sm font-medium text-[var(--text)] truncate max-w-[120px]">
           {nextEventName}
@@ -72,12 +72,12 @@ export default function Topbar() {
         </span>
       </div>
 
-      <div className="flex items-center gap-2 border-r border-[var(--border)] px-4">
+      <div className="hidden shrink-0 items-center gap-2 border-r border-[var(--border)] px-4 md:flex">
         <span className="font-mono text-xs font-medium text-[var(--text3)]">BIAS</span>
         <span className="font-mono text-sm font-medium text-[var(--text2)]">{BIAS}</span>
       </div>
 
-      <div className="pl-4">
+      <div className="ml-auto shrink-0 pl-3 md:pl-4">
         <span className="font-mono text-sm font-medium text-[var(--text2)]">
           {formatWAT(time)} WAT
         </span>

@@ -66,7 +66,7 @@ export default function PricePanel() {
           background: 'linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent)',
         }}
       />
-      <div className="font-mono text-[22px] font-bold leading-tight" style={{ color: 'var(--gold2)', letterSpacing: '0.02em' }}>
+      <div className="font-mono text-xl font-bold leading-tight md:text-[22px]" style={{ color: 'var(--gold2)', letterSpacing: '0.02em' }}>
         ${formatPrice(price)}
       </div>
       {change !== 0 ? (

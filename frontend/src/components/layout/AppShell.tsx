@@ -9,7 +9,10 @@ export default function AppShell() {
       <Topbar />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-auto p-5" style={{ minHeight: 'calc(100vh - 44px - 24px)' }}>
+        <main
+          className="flex-1 overflow-auto p-4 pb-24 md:p-5 md:pb-5"
+          style={{ minHeight: 'calc(100vh - 44px - 24px)' }}
+        >
           <Outlet />
         </main>
       </div>

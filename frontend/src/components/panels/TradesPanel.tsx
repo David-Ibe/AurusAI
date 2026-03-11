@@ -53,8 +53,8 @@ export default function TradesPanel() {
 
   return (
     <Panel title="RECENT TRADES">
-      <div className="overflow-x-auto">
-        <table className="w-full font-mono text-sm">
+      <div className="overflow-x-auto overscroll-x-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <table className="w-full min-w-[480px] font-mono text-sm">
           <thead>
             <tr className="text-[var(--text3)]">
               <th className="px-2 py-1 text-left">DATE</th>
