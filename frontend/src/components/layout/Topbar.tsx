@@ -36,13 +36,13 @@ export default function Topbar() {
       <div className="flex items-center gap-3 border-r border-[var(--border)] pr-4">
         <span
           className="font-mono leading-none"
-          style={{ fontSize: 18, color: 'var(--gold)', textShadow: '0 0 12px rgba(212,148,58,0.4)' }}
+          style={{ fontSize: 18, color: 'var(--gold)', textShadow: '0 0 12px rgba(251,191,36,0.35)' }}
         >
           ⬡
         </span>
         <span
           className="font-mono font-bold"
-          style={{ fontSize: 12, color: 'var(--gold2)', letterSpacing: 2 }}
+          style={{ fontSize: 14, color: 'var(--gold2)', letterSpacing: 2, fontWeight: 600 }}
         >
           AURUSAI
         </span>
@@ -50,35 +50,35 @@ export default function Topbar() {
 
       <div className="flex items-center gap-2 border-r border-[var(--border)] px-4">
         <span
-          className="flex items-center gap-1.5 rounded px-2 py-1 font-mono text-[10px] uppercase"
+          className="flex items-center gap-1.5 rounded px-2 py-1 font-mono text-xs font-medium uppercase"
           style={{
-            background: isLondon ? 'rgba(212,148,58,0.15)' : isNY ? 'rgba(46,204,113,0.1)' : 'var(--bg3)',
+            background: isLondon ? 'rgba(251,191,36,0.15)' : isNY ? 'rgba(52,211,153,0.12)' : 'var(--bg3)',
             color: isLondon ? 'var(--gold)' : isNY ? 'var(--green)' : 'var(--text3)',
-            border: isLondon ? '1px solid rgba(212,148,58,0.3)' : '1px solid transparent',
+            border: isLondon ? '1px solid rgba(251,191,36,0.35)' : '1px solid transparent',
           }}
         >
-          <span className="text-[9px]">⬡</span>
+          <span className="text-xs">⬡</span>
           {SESSION}
         </span>
       </div>
 
       <div className="flex items-center gap-2 border-r border-[var(--border)] px-4">
-        <span className="font-mono text-[10px] text-[var(--text3)]">NEXT</span>
-        <span className="font-mono text-xs text-[var(--text)] truncate max-w-[120px]">
+        <span className="font-mono text-xs font-medium text-[var(--text3)]">NEXT</span>
+        <span className="font-mono text-sm font-medium text-[var(--text)] truncate max-w-[120px]">
           {nextEventName}
         </span>
-        <span className="font-mono text-xs text-[var(--gold)] shrink-0">
+        <span className="font-mono text-sm font-medium text-[var(--gold)] shrink-0">
           {nextEventTime} WAT
         </span>
       </div>
 
       <div className="flex items-center gap-2 border-r border-[var(--border)] px-4">
-        <span className="font-mono text-[10px] text-[var(--text3)]">BIAS</span>
-        <span className="font-mono text-xs text-[var(--text2)]">{BIAS}</span>
+        <span className="font-mono text-xs font-medium text-[var(--text3)]">BIAS</span>
+        <span className="font-mono text-sm font-medium text-[var(--text2)]">{BIAS}</span>
       </div>
 
       <div className="pl-4">
-        <span className="font-mono text-xs text-[var(--text2)]">
+        <span className="font-mono text-sm font-medium text-[var(--text2)]">
           {formatWAT(time)} WAT
         </span>
       </div>

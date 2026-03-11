@@ -1,22 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --bg:        #080808;
-  --bg1:       #0F0F0F;
-  --bg2:       #141414;
-  --bg3:       #1A1A1A;
-  --border:    #242424;
-  --border2:   #2E2E2E;
-  --gold:      #D4943A;
-  --gold2:     #F0B050;
-  --gold-dim:  #6B5520;
-  --text:      #F0E8D8;
-  --text2:     #CAB8A8;
-  --text3:     #9A8A7A;
-  --green:     #2ECC71;
-  --red:       #E74C3C;
-  --amber:     #F39C12;
-  --blue:      #3498DB;
+  /* Softer dark backgrounds — no pure black, reduces halo/eye strain */
+  --bg:        #0F1217;
+  --bg1:       #161B22;
+  --bg2:       #1C2526;
+  --bg3:       #21262D;
+  --border:    #30363D;
+  --border2:   #484F58;
+  /* High-contrast text — WCAG AA+ for readability */
+  --text:      #F0F4F8;
+  --text2:     #E8EEF2;
+  --text3:     #A0AEC0;
+  /* Saturated, visible accents */
+  --green:     #34D399;
+  --red:       #F87171;
+  --amber:     #FBBF24;
+  --gold:      #FBBF24;
+  --gold2:     #FFD700;
+  --gold-dim:  #B8941F;
+  --blue:      #60A5FA;
 }
 
 * {
@@ -29,27 +32,32 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography — do not use Tailwind for these */
+/* Typography — high contrast, 14–16px base, medium/semi-bold */
 .font-mono { font-family: 'IBM Plex Mono', monospace; }
 .font-sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
-.text-price { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
-.text-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
-.text-ai { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 11px; line-height: 1.5; }
-.text-panel-header { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); }
+.text-price { font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 600; letter-spacing: 0.03em; }
+.text-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+.text-ai { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; font-weight: 500; line-height: 1.6; letter-spacing: 0.02em; }
+.text-panel-header { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
 
-/* Panel system */
+/* Panel system — layered surfaces with subtle elevation */
 .panel {
   background: var(--bg1);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 .panel-header {
-  height: 32px;
-  padding: 0 12px;
+  height: 44px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -58,43 +66,45 @@ body {
 }
 .panel-title {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text2);
-  letter-spacing: 2px;
+  color: var(--text3);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 .panel-body {
-  padding: 12px;
+  padding: 16px;
+  line-height: 1.55;
 }
 
 /* Question frame (Three Questions) */
 .question-frame {
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 14px 16px;
+  border-radius: 6px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 .answer-badge {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 3px;
-  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-.answer-badge--trade { background: rgba(46, 204, 113, 0.2); color: var(--green); border: 1px solid rgba(46, 204, 113, 0.3); }
-.answer-badge--wait { background: rgba(243, 156, 18, 0.2); color: var(--amber); border: 1px solid rgba(243, 156, 18, 0.3); }
-.answer-badge--stay-out { background: rgba(231, 76, 60, 0.2); color: var(--red); border: 1px solid rgba(231, 76, 60, 0.3); }
+.answer-badge--trade { background: rgba(52, 211, 153, 0.18); color: var(--green); border: 1px solid rgba(52, 211, 153, 0.4); }
+.answer-badge--wait { background: rgba(251, 191, 36, 0.18); color: var(--amber); border: 1px solid rgba(251, 191, 36, 0.4); }
+.answer-badge--stay-out { background: rgba(248, 113, 113, 0.18); color: var(--red); border: 1px solid rgba(248, 113, 113, 0.4); }
 
 /* Animations */
 @keyframes priceFlash {
   0% { color: var(--gold2); }
-  50% { color: var(--green); background: rgba(46, 204, 113, 0.1); }
+  50% { color: var(--green); background: rgba(52, 211, 153, 0.15); }
   100% { color: var(--gold2); }
 }
 @keyframes pulse {

@@ -13,7 +13,7 @@ export default function PricePanel() {
   if (error) {
     return (
       <Panel title="XAU/USD">
-        <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+        <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
           Feed unavailable
         </div>
       </Panel>
@@ -23,7 +23,7 @@ export default function PricePanel() {
   if (!hasPrice && data?.error) {
     return (
       <Panel title="XAU/USD">
-        <div className="rounded border border-[var(--amber)] p-2 font-mono text-[10px] text-[var(--amber)]">
+        <div className="rounded border border-[var(--amber)] p-2 font-mono text-sm font-medium text-[var(--amber)]">
           {data.error}
         </div>
       </Panel>
@@ -42,7 +42,7 @@ export default function PricePanel() {
   if (!hasPrice) {
     return (
       <Panel title="XAU/USD">
-        <div className="rounded border border-[var(--amber)] p-2 font-mono text-[10px] text-[var(--amber)]">
+        <div className="rounded border border-[var(--amber)] p-2 font-mono text-sm font-medium text-[var(--amber)]">
           Price feed unavailable. Add TWELVEDATA_API_KEY or FMP_API_KEY to .env
         </div>
       </Panel>
@@ -66,7 +66,7 @@ export default function PricePanel() {
           background: 'linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent)',
         }}
       />
-      <div className="font-mono text-[32px] font-medium" style={{ color: 'var(--gold2)' }}>
+      <div className="font-mono text-[22px] font-bold leading-tight" style={{ color: 'var(--gold2)', letterSpacing: '0.02em' }}>
         ${formatPrice(price)}
       </div>
       {change !== 0 ? (
@@ -74,7 +74,7 @@ export default function PricePanel() {
           <PriceChange change={change} pct={pct} />
         </div>
       ) : (
-        <div className="mt-1 font-mono text-xs text-[var(--text3)]">— 24h</div>
+        <div className="mt-1 font-mono text-sm font-medium text-[var(--text3)]">— 24h</div>
       )}
       <div className="mt-3">
         <Sparkline data={sparklineData} positive={true} />
@@ -88,11 +88,11 @@ export default function PricePanel() {
         ].map(({ label, value }) => (
           <div
             key={label}
-            className="rounded p-2 font-mono text-xs"
+            className="rounded p-3 font-mono"
             style={{ backgroundColor: 'var(--bg2)' }}
           >
-            <div className="text-[var(--text2)]">{label}</div>
-            <div className="text-[var(--gold2)]">${formatPrice(value)}</div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text3)]">{label}</div>
+            <div className="mt-0.5 text-base font-bold text-[var(--gold2)]">${formatPrice(value)}</div>
           </div>
         ))}
       </div>

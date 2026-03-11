@@ -44,7 +44,7 @@ export default function Calendar() {
     return (
       <div className="space-y-4">
         <Panel title="ECONOMIC CALENDAR">
-          <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+          <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
             Feed unavailable.
           </div>
         </Panel>
@@ -59,9 +59,9 @@ export default function Calendar() {
           <div className="flex gap-2">
             <button
               onClick={() => setFilter('today')}
-              className={`rounded px-2 py-1 font-mono text-[10px] uppercase ${
+              className={`rounded px-2 py-1 font-mono text-sm font-medium uppercase ${
                 filter === 'today'
-                  ? 'border border-[var(--gold)] bg-[rgba(212,148,58,0.12)] text-[var(--gold)]'
+                  ? 'border border-[var(--gold)] bg-[rgba(251,191,36,0.12)] text-[var(--gold)]'
                   : 'border border-[var(--border)] bg-transparent text-[var(--text2)] hover:border-[var(--gold-dim)]'
               }`}
             >
@@ -69,9 +69,9 @@ export default function Calendar() {
             </button>
             <button
               onClick={() => setFilter('week')}
-              className={`rounded px-2 py-1 font-mono text-[10px] uppercase ${
+              className={`rounded px-2 py-1 font-mono text-sm font-medium uppercase ${
                 filter === 'week'
-                  ? 'border border-[var(--gold)] bg-[rgba(212,148,58,0.12)] text-[var(--gold)]'
+                  ? 'border border-[var(--gold)] bg-[rgba(251,191,36,0.12)] text-[var(--gold)]'
                   : 'border border-[var(--border)] bg-transparent text-[var(--text2)] hover:border-[var(--gold-dim)]'
               }`}
             >
@@ -81,7 +81,7 @@ export default function Calendar() {
           <button
             onClick={handleSync}
             disabled={syncing}
-            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.1)] disabled:opacity-50"
+            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(251,191,36,0.12)] disabled:opacity-50"
           >
             {syncing ? 'Syncing...' : 'Sync'}
           </button>
@@ -113,7 +113,7 @@ export default function Calendar() {
                   <div className="min-w-0 flex-1">
                     <span className="font-sans text-[var(--text)]">{event.event_name}</span>
                     {note && (
-                      <p className="mt-1 font-sans text-[10px] text-[var(--text2)]">{note}</p>
+                      <p className="mt-1 font-sans text-sm font-medium text-[var(--text2)]">{note}</p>
                     )}
                   </div>
                 </div>

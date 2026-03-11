@@ -20,7 +20,7 @@ export default function CalendarPanel() {
   if (error) {
     return (
       <Panel title="TODAY'S EVENTS">
-        <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+        <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
           Feed unavailable
         </div>
       </Panel>
@@ -41,7 +41,7 @@ export default function CalendarPanel() {
   if (events.length === 0) {
     return (
       <Panel title="TODAY'S EVENTS">
-        <p className="font-sans text-xs text-[var(--text2)]">
+        <p className="font-sans text-sm font-medium text-[var(--text2)]">
           No events today. Sync the calendar to load.
         </p>
       </Panel>
@@ -62,7 +62,7 @@ export default function CalendarPanel() {
             : '—';
           const note = event.explanation || event.watch_for || '';
           return (
-            <div key={event.id ?? event.event_name} className="flex items-center gap-3 text-xs">
+            <div key={event.id ?? event.event_name} className="flex items-center gap-3 text-sm">
               <span className="w-12 font-mono text-[var(--text3)]">{timeStr}</span>
               <ImpactBadge impact={impact} />
               <div className="flex-1 min-w-0">
@@ -79,9 +79,9 @@ export default function CalendarPanel() {
       </div>
       {hasHighImpact && (
         <div
-          className="mt-3 rounded p-2 font-sans text-[10px]"
+          className="mt-3 rounded p-2 font-sans text-sm font-medium"
           style={{
-            backgroundColor: 'rgba(231,76,60,0.1)',
+            backgroundColor: 'rgba(248,113,113,0.15)',
             borderLeft: '3px solid var(--red)',
             color: 'var(--text2)',
           }}

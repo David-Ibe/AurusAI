@@ -70,7 +70,7 @@ export default function Report() {
     return (
       <div className="space-y-4">
         <Panel title="WEEKLY REPORT">
-          <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+          <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
             Failed to load reports.
           </div>
         </Panel>
@@ -82,13 +82,13 @@ export default function Report() {
     <div className="space-y-4 font-sans text-sm">
       {content.week_summary && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Summary</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Summary</span>
           <p className="mt-1 text-[var(--text)]">{content.week_summary}</p>
         </div>
       )}
       {content.major_drivers && content.major_drivers.length > 0 && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Major drivers</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Major drivers</span>
           <ul className="mt-1 list-inside list-disc space-y-0.5 text-[var(--text)]">
             {content.major_drivers.map((d, i) => (
               <li key={i}>{d}</li>
@@ -98,13 +98,13 @@ export default function Report() {
       )}
       {content.technical_picture && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Technical</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Technical</span>
           <p className="mt-1 text-[var(--text)]">{content.technical_picture}</p>
         </div>
       )}
       {content.important_news && content.important_news.length > 0 && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Important news</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Important news</span>
           <ul className="mt-1 list-inside list-disc space-y-0.5 text-[var(--text)]">
             {content.important_news.map((n, i) => (
               <li key={i}>{n}</li>
@@ -114,7 +114,7 @@ export default function Report() {
       )}
       {content.upcoming_catalysts && content.upcoming_catalysts.length > 0 && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Upcoming catalysts</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Upcoming catalysts</span>
           <ul className="mt-1 list-inside list-disc space-y-0.5 text-[var(--text)]">
             {content.upcoming_catalysts.map((c, i) => (
               <li key={i}>{c}</li>
@@ -124,7 +124,7 @@ export default function Report() {
       )}
       {content.key_levels && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Key levels</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Key levels</span>
           <p className="mt-1 font-mono text-[var(--text)]">
             R: ${content.key_levels.resistance ?? '—'} · S: ${content.key_levels.support ?? '—'}
           </p>
@@ -132,7 +132,7 @@ export default function Report() {
       )}
       {content.trade_setup_ideas && content.trade_setup_ideas.length > 0 && (
         <div>
-          <span className="font-mono text-[10px] uppercase text-[var(--gold)]">Setup ideas</span>
+          <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">Setup ideas</span>
           <ul className="mt-1 list-inside list-disc space-y-0.5 text-[var(--text)]">
             {content.trade_setup_ideas.map((s, i) => (
               <li key={i}>{s}</li>
@@ -179,7 +179,7 @@ export default function Report() {
             type="button"
             onClick={handleGenerateDaily}
             disabled={generating !== null}
-            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.1)] disabled:opacity-50"
+            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(251,191,36,0.12)] disabled:opacity-50"
           >
             {generating === 'daily' ? 'Generating…' : 'Generate Daily Brief'}
           </button>
@@ -187,7 +187,7 @@ export default function Report() {
             type="button"
             onClick={handleGenerateWeekly}
             disabled={generating !== null}
-            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.1)] disabled:opacity-50"
+            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(251,191,36,0.12)] disabled:opacity-50"
           >
             {generating === 'weekly' ? 'Generating…' : 'Generate Weekly Report'}
           </button>
@@ -206,7 +206,7 @@ export default function Report() {
                 key={r.id}
                 className="rounded border border-[var(--border)] bg-[var(--bg2)] p-4"
               >
-                <div className="mb-3 font-mono text-[10px] uppercase tracking-wider text-[var(--gold)]">
+                <div className="mb-3 font-mono text-sm font-medium uppercase tracking-wider text-[var(--gold)]">
                   Week of {r.week_start}
                   {r.delivered_at && (
                     <span className="ml-2 text-[var(--text3)]">
@@ -222,7 +222,7 @@ export default function Report() {
 
             {dailyReports.length > 0 && (
               <div>
-                <div className="mb-2 font-mono text-[10px] uppercase tracking-wider text-[var(--text3)]">
+                <div className="mb-2 font-mono text-sm font-medium uppercase tracking-wider text-[var(--text3)]">
                   Recent daily briefs
                 </div>
                 <div className="space-y-3">
@@ -231,7 +231,7 @@ export default function Report() {
                       key={r.id}
                       className="rounded border border-[var(--border2)] bg-[var(--bg2)] p-3"
                     >
-                      <div className="mb-2 font-mono text-[10px] text-[var(--text3)]">
+                      <div className="mb-2 font-mono text-sm font-medium text-[var(--text3)]">
                         {formatReportDate(r.delivered_at ?? '')}
                       </div>
                       {r.content

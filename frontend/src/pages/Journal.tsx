@@ -113,7 +113,7 @@ export default function Journal() {
     return (
       <div className="space-y-4">
         <Panel title="TRADE JOURNAL">
-          <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+          <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
             Failed to load trades.
           </div>
         </Panel>
@@ -136,7 +136,7 @@ export default function Journal() {
             <button
               type="button"
               onClick={() => setShowForm(true)}
-              className="rounded border border-[var(--gold)] bg-[rgba(212,148,58,0.08)] px-3 py-1.5 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.15)]"
+              className="rounded border border-[var(--gold)] bg-[rgba(251,191,36,0.1)] px-3 py-1.5 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(251,191,36,0.15)]"
             >
               + Log Trade
             </button>
@@ -222,14 +222,14 @@ export default function Journal() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="rounded bg-[var(--gold)] px-3 py-1.5 font-mono text-[11px] text-[var(--bg)] hover:bg-[var(--gold2)] disabled:opacity-50"
+                  className="rounded bg-[var(--gold)] px-3 py-1.5 font-mono text-sm font-medium text-[var(--bg)] hover:bg-[var(--gold2)] disabled:opacity-50"
                 >
                   Add
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="rounded border border-[var(--border)] px-3 py-1.5 font-mono text-[11px] text-[var(--text2)] hover:border-[var(--border2)]"
+                  className="rounded border border-[var(--border)] px-3 py-1.5 font-mono text-sm font-medium text-[var(--text2)] hover:border-[var(--border2)]"
                 >
                   Cancel
                 </button>
@@ -310,12 +310,12 @@ export default function Journal() {
                               placeholder="Exit"
                               value={exitPrice}
                               onChange={(e) => setExitPrice(e.target.value)}
-                              className="w-20 rounded border border-[var(--border)] bg-[var(--bg)] px-1 py-0.5 font-mono text-[10px]"
+                              className="w-20 rounded border border-[var(--border)] bg-[var(--bg)] px-1 py-0.5 font-mono text-sm font-medium"
                             />
                             <select
                               value={outcome}
                               onChange={(e) => setOutcome(e.target.value as 'win' | 'loss' | 'breakeven')}
-                              className="rounded border border-[var(--border)] bg-[var(--bg)] px-1 py-0.5 font-mono text-[10px]"
+                              className="rounded border border-[var(--border)] bg-[var(--bg)] px-1 py-0.5 font-mono text-sm font-medium"
                             >
                               <option value="win">Win</option>
                               <option value="loss">Loss</option>
@@ -327,20 +327,20 @@ export default function Journal() {
                               placeholder="PnL $"
                               value={pnl}
                               onChange={(e) => setPnl(e.target.value)}
-                              className="w-16 rounded border border-[var(--border)] bg-[var(--bg)] px-1 py-0.5 font-mono text-[10px]"
+                              className="w-16 rounded border border-[var(--border)] bg-[var(--bg)] px-1 py-0.5 font-mono text-sm font-medium"
                             />
                             <button
                               type="button"
                               onClick={() => handleClose(t)}
                               disabled={submitting}
-                              className="rounded bg-[var(--green)] px-2 py-0.5 font-mono text-[10px] text-[var(--bg)] disabled:opacity-50"
+                              className="rounded bg-[var(--green)] px-2 py-0.5 font-mono text-sm font-medium text-[var(--bg)] disabled:opacity-50"
                             >
                               Save
                             </button>
                             <button
                               type="button"
                               onClick={() => setClosing(null)}
-                              className="rounded border border-[var(--border)] px-2 py-0.5 font-mono text-[10px] text-[var(--text2)]"
+                              className="rounded border border-[var(--border)] px-2 py-0.5 font-mono text-sm font-medium text-[var(--text2)]"
                             >
                               Cancel
                             </button>
@@ -350,7 +350,7 @@ export default function Journal() {
                             type="button"
                             onClick={() => startClose(t)}
                             disabled={submitting}
-                            className="rounded border border-[var(--green)] px-2 py-0.5 font-mono text-[10px] text-[var(--green)] hover:bg-[rgba(46,204,113,0.1)]"
+                            className="rounded border border-[var(--green)] px-2 py-0.5 font-mono text-sm font-medium text-[var(--green)] hover:bg-[rgba(52,211,153,0.15)]"
                           >
                             Close
                           </button>

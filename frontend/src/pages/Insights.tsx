@@ -33,13 +33,13 @@ export default function Insights() {
         <button
           onClick={handleFetch}
           disabled={loading}
-          className="rounded border border-[var(--gold)] bg-transparent px-4 py-2 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.1)] disabled:opacity-50"
+          className="rounded border border-[var(--gold)] bg-transparent px-4 py-2 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(251,191,36,0.12)] disabled:opacity-50"
         >
           {loading ? 'Analyzing...' : 'Get Insights'}
         </button>
 
         {error && (
-          <div className="mt-4 rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+          <div className="mt-4 rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
             {error}
           </div>
         )}
@@ -54,35 +54,35 @@ export default function Insights() {
 
             {insights.best_setup && (
               <div>
-                <span className="font-mono text-[10px] uppercase text-[var(--green)]">Best</span>
+                <span className="font-mono text-sm font-medium uppercase text-[var(--green)]">Best</span>
                 <p className="mt-1 text-[var(--text)]">{insights.best_setup}</p>
               </div>
             )}
 
             {insights.weak_setup && (
               <div>
-                <span className="font-mono text-[10px] uppercase text-[var(--red)]">Weak</span>
+                <span className="font-mono text-sm font-medium uppercase text-[var(--red)]">Weak</span>
                 <p className="mt-1 text-[var(--text)]">{insights.weak_setup}</p>
               </div>
             )}
 
             {insights.session_performance && (
               <div>
-                <span className="font-mono text-[10px] uppercase text-[var(--text2)]">Session</span>
+                <span className="font-mono text-sm font-medium uppercase text-[var(--text2)]">Session</span>
                 <p className="mt-1 text-[var(--text)]">{insights.session_performance}</p>
               </div>
             )}
 
             {insights.news_day_impact && (
               <div>
-                <span className="font-mono text-[10px] uppercase text-[var(--text2)]">News days</span>
+                <span className="font-mono text-sm font-medium uppercase text-[var(--text2)]">News days</span>
                 <p className="mt-1 text-[var(--text)]">{insights.news_day_impact}</p>
               </div>
             )}
 
             {insights.recommendations && insights.recommendations.length > 0 && (
               <div>
-                <span className="font-mono text-[10px] uppercase text-[var(--gold)]">
+                <span className="font-mono text-sm font-medium uppercase text-[var(--gold)]">
                   Recommendations
                 </span>
                 <ul className="mt-2 list-inside list-disc space-y-1 text-[var(--text)]">

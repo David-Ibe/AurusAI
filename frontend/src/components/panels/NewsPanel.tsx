@@ -18,7 +18,7 @@ export default function NewsPanel() {
   if (error) {
     return (
       <Panel title="NEWS INTELLIGENCE">
-        <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+        <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
           Feed unavailable
         </div>
       </Panel>
@@ -39,7 +39,7 @@ export default function NewsPanel() {
   if (news.length === 0) {
     return (
       <Panel title="NEWS INTELLIGENCE">
-        <p className="font-sans text-xs text-[var(--text2)]">
+        <p className="font-sans text-sm font-medium text-[var(--text2)]">
           No news. Sync news to load.
         </p>
       </Panel>
@@ -54,20 +54,20 @@ export default function NewsPanel() {
           return (
             <div
               key={item.id ?? item.headline}
-              className="rounded p-2 transition-colors hover:bg-[rgba(212,148,58,0.06)]"
+              className="rounded p-2 transition-colors hover:bg-[rgba(251,191,36,0.08)]"
             >
               <div className="flex items-start gap-2">
                 <ImpactDot impact={impact} />
                 <div className="flex-1">
-                  <p className="font-sans text-[11px] leading-relaxed text-[var(--text)]">
+                  <p className="font-sans text-sm font-medium leading-relaxed text-[var(--text)]">
                     {item.headline}
                   </p>
-                  <p className="mt-1 font-mono text-[9px] text-[var(--text3)]">
+                  <p className="mt-1 font-mono text-xs font-medium text-[var(--text3)]">
                     {item.source || '—'} · {formatWATShort(item.published_at)}
                   </p>
                   {item.impact_assessment && (
                     <p
-                      className="mt-1 font-sans text-[10px] italic"
+                      className="mt-1 font-sans text-sm italic"
                       style={{ color: 'var(--text2)' }}
                     >
                       {item.impact_assessment}

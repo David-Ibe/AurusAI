@@ -35,7 +35,7 @@ export default function News() {
     return (
       <div className="space-y-4">
         <Panel title="NEWS INTELLIGENCE">
-          <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+          <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
             Feed unavailable.
           </div>
         </Panel>
@@ -50,9 +50,9 @@ export default function News() {
           <div className="flex gap-2">
             <button
               onClick={() => setMinImpact(null)}
-              className={`rounded px-2 py-1 font-mono text-[10px] uppercase ${
+              className={`rounded px-2 py-1 font-mono text-sm font-medium uppercase ${
                 minImpact == null
-                  ? 'border border-[var(--gold)] bg-[rgba(212,148,58,0.12)] text-[var(--gold)]'
+                  ? 'border border-[var(--gold)] bg-[rgba(251,191,36,0.12)] text-[var(--gold)]'
                   : 'border border-[var(--border)] bg-transparent text-[var(--text2)] hover:border-[var(--gold-dim)]'
               }`}
             >
@@ -60,7 +60,7 @@ export default function News() {
             </button>
             <button
               onClick={() => setMinImpact(7)}
-              className={`rounded px-2 py-1 font-mono text-[10px] uppercase ${
+              className={`rounded px-2 py-1 font-mono text-sm font-medium uppercase ${
                 minImpact === 7
                   ? 'border border-[var(--red)] bg-[rgba(231,76,60,0.12)] text-[var(--red)]'
                   : 'border border-[var(--border)] bg-transparent text-[var(--text2)] hover:border-[var(--gold-dim)]'
@@ -70,7 +70,7 @@ export default function News() {
             </button>
             <button
               onClick={() => setMinImpact(4)}
-              className={`rounded px-2 py-1 font-mono text-[10px] uppercase ${
+              className={`rounded px-2 py-1 font-mono text-sm font-medium uppercase ${
                 minImpact === 4
                   ? 'border border-[var(--amber)] bg-[rgba(243,156,18,0.12)] text-[var(--amber)]'
                   : 'border border-[var(--border)] bg-transparent text-[var(--text2)] hover:border-[var(--gold-dim)]'
@@ -82,7 +82,7 @@ export default function News() {
           <button
             onClick={handleSync}
             disabled={syncing}
-            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.1)] disabled:opacity-50"
+            className="rounded border border-[var(--gold)] bg-transparent px-3 py-1.5 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(212,148,58,0.1)] disabled:opacity-50"
           >
             {syncing ? 'Syncing...' : 'Sync'}
           </button>
@@ -108,7 +108,7 @@ export default function News() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block rounded border border-[var(--border)] p-3 transition-colors hover:bg-[rgba(212,148,58,0.04)] hover:border-[rgba(212,148,58,0.2)]"
+                  className="block rounded border border-[var(--border)] p-3 transition-colors hover:bg-[rgba(251,191,36,0.06)] hover:border-[rgba(251,191,36,0.25)]"
                 >
                   <div className="flex items-start gap-2">
                     <ImpactDot impact={impact} />
@@ -116,12 +116,12 @@ export default function News() {
                       <p className="font-sans text-[12px] leading-relaxed text-[var(--text)]">
                         {item.headline}
                       </p>
-                      <p className="mt-1 font-mono text-[9px] text-[var(--text3)]">
+                      <p className="mt-1 font-mono text-xs font-medium text-[var(--text3)]">
                         {item.source || '—'} · {formatWATShort(item.published_at)}
                       </p>
                       {item.impact_assessment && (
                         <p
-                          className="mt-2 font-sans text-[10px] italic"
+                          className="mt-2 font-sans text-sm font-medium italic"
                           style={{ color: 'var(--text2)' }}
                         >
                           {item.impact_assessment}

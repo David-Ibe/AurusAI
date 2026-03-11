@@ -394,11 +394,14 @@ The interface is a trading tool, not a marketing site.
 
 | Element | Value |
 |---------|-------|
-| Background | #0D0D0D |
-| Gold accent | #B8860B |
-| Impact HIGH | Red |
-| Impact MEDIUM | Amber |
-| Impact LOW | Green |
+| Background (deep) | #0F1217 |
+| Surface / panels | #161B22, #1C2526 |
+| Primary text | #F0F4F8 |
+| Secondary text | #A0AEC0 |
+| Gold accent | #FBBF24 / #FFD700 |
+| Positive (green) | #34D399 |
+| Negative (red) | #F87171 |
+| Impact MEDIUM | #FBBF24 (amber) |
 
 **Rules:**
 
@@ -406,6 +409,7 @@ The interface is a trading tool, not a marketing site.
 - fast loading
 - readable on mobile
 - price displayed to 2 decimal places
+- **Typography:** 14–16px base; font-weight 500–600; key numbers 18–24px; line-height 1.5–1.6; high-contrast text (#F0F4F8 min)
 
 ---
 

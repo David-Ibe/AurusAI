@@ -43,15 +43,15 @@ export default function ThreeQuestions() {
   return (
     <div className="grid gap-2 md:grid-cols-3">
       <div className="question-frame">
-        <span className="font-sans text-[11px] text-[var(--text2)]">Should I trade?</span>
+        <span className="font-sans text-sm font-medium text-[var(--text2)]">Should I trade?</span>
         <span className={`answer-badge ${tradeBadge.cls}`}>{tradeBadge.text}</span>
       </div>
       <div className="question-frame">
-        <span className="font-sans text-[11px] text-[var(--text2)]">Should I wait?</span>
+        <span className="font-sans text-sm font-medium text-[var(--text2)]">Should I wait?</span>
         <span className={`answer-badge ${waitBadge.cls}`}>{waitBadge.text}</span>
       </div>
       <div className="question-frame">
-        <span className="font-sans text-[11px] text-[var(--text2)]">Should I stay out?</span>
+        <span className="font-sans text-sm font-medium text-[var(--text2)]">Should I stay out?</span>
         <span className={`answer-badge ${stayOutBadge.cls}`}>{stayOutBadge.text}</span>
       </div>
     </div>

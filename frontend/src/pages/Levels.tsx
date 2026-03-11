@@ -103,7 +103,7 @@ export default function Levels() {
     return (
       <div className="space-y-4">
         <Panel title="LEVEL MANAGER">
-          <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+          <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
             Failed to load levels.
           </div>
         </Panel>
@@ -123,7 +123,7 @@ export default function Levels() {
             <button
               type="button"
               onClick={() => setShowForm(true)}
-              className="rounded border border-[var(--gold)] bg-[rgba(212,148,58,0.08)] px-3 py-1.5 font-mono text-[11px] text-[var(--gold)] hover:bg-[rgba(212,148,58,0.15)]"
+              className="rounded border border-[var(--gold)] bg-[rgba(251,191,36,0.1)] px-3 py-1.5 font-mono text-sm font-medium text-[var(--gold)] hover:bg-[rgba(251,191,36,0.15)]"
             >
               + Add Level
             </button>
@@ -168,14 +168,14 @@ export default function Levels() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="rounded bg-[var(--gold)] px-3 py-1.5 font-mono text-[11px] text-[var(--bg)] hover:bg-[var(--gold2)] disabled:opacity-50"
+                  className="rounded bg-[var(--gold)] px-3 py-1.5 font-mono text-sm font-medium text-[var(--bg)] hover:bg-[var(--gold2)] disabled:opacity-50"
                 >
                   Add
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="rounded border border-[var(--border)] px-3 py-1.5 font-mono text-[11px] text-[var(--text2)] hover:border-[var(--border2)]"
+                  className="rounded border border-[var(--border)] px-3 py-1.5 font-mono text-sm font-medium text-[var(--text2)] hover:border-[var(--border2)]"
                 >
                   Cancel
                 </button>
@@ -198,7 +198,7 @@ export default function Levels() {
                 className={`flex flex-wrap items-center gap-3 rounded border p-2 text-xs ${
                   l.type === 'resistance'
                     ? 'border-[rgba(231,76,60,0.3)] bg-[rgba(231,76,60,0.06)]'
-                    : 'border-[rgba(46,204,113,0.3)] bg-[rgba(46,204,113,0.06)]'
+                    : 'border-[rgba(52,211,153,0.35)] bg-[rgba(52,211,153,0.1)]'
                 }`}
               >
                 {editing === l.id ? (
@@ -237,14 +237,14 @@ export default function Levels() {
                         type="button"
                         onClick={saveEdit}
                         disabled={submitting}
-                        className="rounded bg-[var(--gold)] px-2 py-1 font-mono text-[10px] text-[var(--bg)] hover:bg-[var(--gold2)] disabled:opacity-50"
+                        className="rounded bg-[var(--gold)] px-2 py-1 font-mono text-sm font-medium text-[var(--bg)] hover:bg-[var(--gold2)] disabled:opacity-50"
                       >
                         Save
                       </button>
                       <button
                         type="button"
                         onClick={cancelEdit}
-                        className="rounded border border-[var(--border)] px-2 py-1 font-mono text-[10px] text-[var(--text2)]"
+                        className="rounded border border-[var(--border)] px-2 py-1 font-mono text-sm font-medium text-[var(--text2)]"
                       >
                         Cancel
                       </button>
@@ -274,7 +274,7 @@ export default function Levels() {
                           type="button"
                           onClick={() => startEdit(l)}
                           disabled={submitting}
-                          className="rounded border border-[var(--border)] px-2 py-1 font-mono text-[10px] text-[var(--text2)] hover:border-[var(--gold-dim)] hover:text-[var(--gold)] disabled:opacity-50"
+                          className="rounded border border-[var(--border)] px-2 py-1 font-mono text-sm font-medium text-[var(--text2)] hover:border-[var(--gold-dim)] hover:text-[var(--gold)] disabled:opacity-50"
                         >
                           Edit
                         </button>
@@ -282,7 +282,7 @@ export default function Levels() {
                           type="button"
                           onClick={() => handleDelete(l.id)}
                           disabled={submitting}
-                          className="rounded border border-[var(--border)] px-2 py-1 font-mono text-[10px] text-[var(--text2)] hover:border-[var(--red)] hover:text-[var(--red)] disabled:opacity-50"
+                          className="rounded border border-[var(--border)] px-2 py-1 font-mono text-sm font-medium text-[var(--text2)] hover:border-[var(--red)] hover:text-[var(--red)] disabled:opacity-50"
                         >
                           Remove
                         </button>

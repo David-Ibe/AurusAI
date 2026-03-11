@@ -18,11 +18,11 @@ export default function StatusBar() {
             <span
               className={`h-1.5 w-1.5 rounded-full ${active ? 'pulse-dot bg-[var(--green)]' : 'bg-[var(--text3)]'}`}
             />
-            <span className="font-mono text-[9px] text-[var(--text3)] uppercase">{name}</span>
+            <span className="font-mono text-xs font-medium text-[var(--text3)] uppercase">{name}</span>
           </div>
         ))}
       </div>
-      <span className="font-mono text-[9px] text-[var(--text3)]">
+      <span className="font-mono text-xs font-medium text-[var(--text3)]">
         AurusAI v1.0 · <span className="text-[var(--gold-dim)] font-semibold">by Require Labs</span>
       </span>
     </footer>

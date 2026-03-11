@@ -11,7 +11,7 @@ export default function TradesPanel() {
   if (error) {
     return (
       <Panel title="RECENT TRADES">
-        <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+        <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
           Feed unavailable
         </div>
       </Panel>
@@ -33,7 +33,7 @@ export default function TradesPanel() {
   if (trades.length === 0) {
     return (
       <Panel title="RECENT TRADES">
-        <p className="font-sans text-xs text-[var(--text2)]">No trades yet. Log trades in the Journal.</p>
+        <p className="font-sans text-sm font-medium text-[var(--text2)]">No trades yet. Log trades in the Journal.</p>
       </Panel>
     );
   }
@@ -54,7 +54,7 @@ export default function TradesPanel() {
   return (
     <Panel title="RECENT TRADES">
       <div className="overflow-x-auto">
-        <table className="w-full font-mono text-xs">
+        <table className="w-full font-mono text-sm">
           <thead>
             <tr className="text-[var(--text3)]">
               <th className="px-2 py-1 text-left">DATE</th>

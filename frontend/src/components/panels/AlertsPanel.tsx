@@ -11,7 +11,7 @@ export default function AlertsPanel() {
   if (error) {
     return (
       <Panel title="RECENT ALERTS">
-        <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+        <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
           Feed unavailable
         </div>
       </Panel>
@@ -44,19 +44,19 @@ export default function AlertsPanel() {
           <div key={alert.id} className="space-y-1">
             <div className="flex items-center gap-2">
               <span
-                className="rounded px-2 py-0.5 font-mono text-[9px]"
+                className="rounded px-2 py-0.5 font-mono text-xs font-medium"
                 style={{
-                  backgroundColor: 'rgba(212,148,58,0.15)',
+                  backgroundColor: 'rgba(251,191,36,0.15)',
                   color: 'var(--gold)',
                 }}
               >
                 [{alert.type.toUpperCase()}]
               </span>
-              <span className="font-sans text-[11px] text-[var(--text)]">
+              <span className="font-sans text-sm font-medium text-[var(--text)]">
                 {alert.message}
               </span>
             </div>
-            <div className="font-mono text-[9px] text-[var(--text3)]">
+            <div className="font-mono text-xs font-medium text-[var(--text3)]">
               {formatWATShort(alert.fired_at)} · {alert.channel || 'both'}
             </div>
           </div>

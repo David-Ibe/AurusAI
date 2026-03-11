@@ -39,7 +39,7 @@ export default function MorningBrief() {
   if (priceError) {
     return (
       <Panel title="MORNING BRIEF">
-        <div className="rounded border border-[var(--red)] p-2 font-mono text-[10px] text-[var(--red)]">
+        <div className="rounded border border-[var(--red)] p-2 font-mono text-sm font-medium text-[var(--red)]">
           Feed unavailable
         </div>
       </Panel>
@@ -60,44 +60,44 @@ export default function MorningBrief() {
 
   return (
     <Panel title="MORNING BRIEF">
-      <div className="space-y-2 font-mono text-xs">
+      <div className="space-y-3 font-mono text-base" style={{ lineHeight: 1.55 }}>
         <div className="flex items-start justify-between gap-4">
-          <span className="shrink-0 text-[var(--text2)]">GOLD</span>
+          <span className="shrink-0 text-[var(--text3)] font-semibold uppercase text-xs tracking-wider">GOLD</span>
           <span
-            className="text-[var(--gold2)]"
-            style={{ lineHeight: 1.6, wordSpacing: '0.05em', flex: 1, minWidth: 0 }}
+            className="font-bold text-[var(--gold2)]"
+            style={{ lineHeight: 1.6, wordSpacing: '0.05em', flex: 1, minWidth: 0, fontSize: '1.1rem' }}
           >
             {goldPriceStr}
           </span>
         </div>
         <div className="flex items-start justify-between gap-4">
-          <span className="shrink-0 text-[var(--text2)]">BIAS</span>
-          <span className="text-[var(--text)]" style={{ lineHeight: 1.6, flex: 1, minWidth: 0 }}>
+          <span className="shrink-0 text-[var(--text3)] font-semibold uppercase text-xs tracking-wider">BIAS</span>
+          <span className="font-semibold text-[var(--text)]" style={{ lineHeight: 1.6, flex: 1, minWidth: 0 }}>
             {bias}
           </span>
         </div>
         <div className="flex items-start justify-between gap-4">
-          <span className="shrink-0 text-[var(--text2)]">YIELDS</span>
-          <span className="text-[var(--text)]" style={{ lineHeight: 1.6, flex: 1, minWidth: 0 }}>
+          <span className="shrink-0 text-[var(--text3)] font-semibold uppercase text-xs tracking-wider">YIELDS</span>
+          <span className="font-semibold text-[var(--text)]" style={{ lineHeight: 1.6, flex: 1, minWidth: 0 }}>
             {yieldsStr}
           </span>
         </div>
       </div>
       <BiasBar bias={biasValue} />
       <div
-        className="border-l-2 font-sans text-[11px]"
+        className="border-l-2 font-sans text-base font-medium"
         style={{
           borderColor: 'var(--gold-dim)',
           backgroundColor: 'var(--bg2)',
           color: 'var(--text)',
-          lineHeight: 1.7,
+          lineHeight: 1.6,
           wordSpacing: '0.04em',
-          marginLeft: -12,
-          marginRight: -12,
-          paddingLeft: 10,
-          paddingRight: 12,
-          paddingTop: 8,
-          paddingBottom: 8,
+          marginLeft: -16,
+          marginRight: -16,
+          paddingLeft: 16,
+          paddingRight: 16,
+          paddingTop: 12,
+          paddingBottom: 12,
         }}
       >
         {macroContext || note || 'Morning intelligence will appear once the daily brief has run.'}

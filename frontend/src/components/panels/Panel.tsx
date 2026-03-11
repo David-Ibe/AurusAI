@@ -13,7 +13,7 @@ export default function Panel({ title, badge, children, className = '' }: PanelP
       <div className="panel-header">
         <span className="panel-title">{title}</span>
         {badge != null && (
-          <span className="font-mono text-[9px] text-[var(--text3)]">{badge}</span>
+          <span className="font-mono text-xs font-medium text-[var(--text3)]">{badge}</span>
         )}
       </div>
       <div className="panel-body">{children}</div>
